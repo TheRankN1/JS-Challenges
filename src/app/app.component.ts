@@ -6,7 +6,7 @@ interface Person {
   name: string,
   hobbies: string[],
   gender?: string,
-  isOnline?: boolean,
+  isOnline: boolean,
   visitCounts: number,
   likeCounts: number,
 }
@@ -76,6 +76,7 @@ export class AppComponent {
     this.sortByPopular();
     this.likePerson(2);
     this.totalLikes();
+    this.sortByPropName('visitCounts');
   }
 
   public createPerson(person: Person) {
@@ -202,6 +203,7 @@ export class AppComponent {
     })
     console.log(this.persons);
   }
+
   public likePerson(id: number) {
     const findPerson = this.persons.find(person => person.id === id);
     if (findPerson != undefined) {
@@ -209,6 +211,7 @@ export class AppComponent {
       this.persons[findIndexPerson].likeCounts++;
     }
   }
+
   public dislikePerson(id: number) {
     const findPerson = this.persons.find(person => person.id === id);
     if (findPerson != undefined) {
@@ -216,12 +219,88 @@ export class AppComponent {
       this.persons[findIndexPerson].likeCounts--;
     }
   }
-  public totalLikes(){
-    let sumOfLikes=0;
-    for (let i=0; i<this.persons.length;i++){
-      sumOfLikes+=this.persons[i].likeCounts;
+
+  public totalLikes() {
+    let sumOfLikes = 0;
+    for (let i = 0; i < this.persons.length; i++) {
+      sumOfLikes += this.persons[i].likeCounts;
     }
     console.log(sumOfLikes)
     return sumOfLikes;
+  }
+
+  public sortById() {
+    this.persons.sort(function (a, b) {
+      return b.id - a.id;
+    })
+    console.log(this.persons);
+  }
+
+  public sortByName() {
+    //BubbleSort
+    for (let i = 0; i < this.persons.length; i++) {
+      for (let j = 0; j < (this.persons.length - i - 1); j++) {
+        if (this.persons[j].name > this.persons[j + 1].name) {
+          let auxiliar = this.persons[j];
+          this.persons[j] = this.persons[j + 1];
+          this.persons[j + 1] = auxiliar;
+        }
+      }
+    }
+    console.log(this.persons);
+  }
+
+  public sortByLikeCount() {
+    this.persons.sort(function (a, b) {
+      return b.likeCounts - a.likeCounts;
+    })
+    console.log(this.persons);
+  }
+
+  public sortByIsOnline() {
+    for (let i = 0; i < this.persons.length; i++) {
+      for (let j = 0; j < (this.persons.length - i - 1); j++) {
+        if (this.persons[j].isOnline > this.persons[j + 1].isOnline) {
+          let auxiliar = this.persons[j];
+          this.persons[j] = this.persons[j + 1];
+          this.persons[j + 1] = auxiliar;
+        }
+      }
+    }
+  }
+
+  public sortByGender() {
+    for (let i = 0; i < this.persons.length; i++) {
+      for (let j = 0; j < (this.persons.length - i - 1); j++) {
+        // @ts-ignore
+        if (this.persons[j].gender > this.persons[j + 1].gender) {
+          let auxiliar = this.persons[j];
+          this.persons[j] = this.persons[j + 1];
+          this.persons[j + 1] = auxiliar;
+        }
+      }
+    }
+  }
+
+
+  public sortByPropName(propName: string) {
+    if (propName === 'id') {
+      this.sortById();
+    }
+    if (propName === 'name') {
+      this.sortByName();
+    }
+    if (propName === 'likeCounts') {
+      this.sortByLikeCount();
+    }
+    if (propName === 'visitCounts') {
+      this.sortByPopular();
+    }
+    if (propName === 'isOnline') {
+      this.sortByIsOnline();
+    }
+    if (propName === 'gender') {
+      this.sortByGender();
+    }
   }
 }
