@@ -5,7 +5,8 @@ interface Person {
   id: number,
   name: string,
   hobbies: string[],
-  gender?:string
+  gender?:string,
+  isOnline?:boolean
 }
 
 @Component({
@@ -27,8 +28,7 @@ export class AppComponent {
   // }
 
   constructor() {
-    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'] });
-    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: ['Fotbal', 'Box', 'Muzica']});
+    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'] ,isOnline:true });
     this.createPerson({id: this.idCounter, name: 'Andreea', hobbies: ['Fotbal', 'Box', 'Muzica'] , gender:'female'});
     this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: []});
     this.deletePerson(1);
@@ -36,12 +36,16 @@ export class AppComponent {
     this.deleteHobby(0, '2lei');
     this.showOnlyPersonsWithHobby();
     this.showNameAndHobbyToPerson(1);
+    this.showBoys();
   }
 
   public createPerson(person: Person) {
     this.persons.push(person)
     if(this.persons[this.idCounter].gender===undefined) {
       this.persons[this.idCounter].gender = 'male';
+    }
+    if(this.persons[this.idCounter].isOnline===undefined) {
+      this.persons[this.idCounter].isOnline = false;
     }
     this.idCounter++;
     console.log(this.persons);
