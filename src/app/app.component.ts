@@ -74,6 +74,7 @@ export class AppComponent {
     this.groupPersonHobbies([1, 2], 'LOL');
     this.personVisited(2);
     this.sortByPopular();
+    this.likePerson(2);
   }
 
   public createPerson(person: Person) {
@@ -199,5 +200,19 @@ export class AppComponent {
       return b.visitCounts - a.visitCounts;
     })
     console.log(this.persons);
+  }
+  public likePerson(id: number) {
+    const findPerson = this.persons.find(person => person.id === id);
+    if (findPerson != undefined) {
+      const findIndexPerson = this.persons.indexOf(findPerson);
+      this.persons[findIndexPerson].likeCounts++;
+    }
+  }
+  public dislikePerson(id: number) {
+    const findPerson = this.persons.find(person => person.id === id);
+    if (findPerson != undefined) {
+      const findIndexPerson = this.persons.indexOf(findPerson);
+      this.persons[findIndexPerson].likeCounts--;
+    }
   }
 }
