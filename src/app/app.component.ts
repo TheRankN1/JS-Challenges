@@ -78,6 +78,7 @@ export class AppComponent {
     this.totalLikes();
     this.sortByPropName('visitCounts');
     this.filterPerson('Sor');
+   console.log( this.totalBy('visitCounts'));
   }
 
   public createPerson(person: Person) {
@@ -311,5 +312,23 @@ export class AppComponent {
         console.log(this.persons[i].name)
       }
     }
+  }
+  public totalBy(propName:string){
+    let sumLikes=0 , sumHobbies=0 , sumVisit=0;
+    for(let i=0;i<this.persons.length;i++){
+      sumLikes+=this.persons[i].likeCounts;
+      sumVisit+=this.persons[i].visitCounts;
+      sumHobbies+=this.persons[i].hobbies.length;
+    }
+    if(propName==='likePerson'){
+      return sumLikes;
+    }else if(propName === 'hobbies'){
+      return sumHobbies;
+    }else if(propName === 'visitCounts'){
+      return sumVisit;
+    }else{
+      console.log('Ati introdus o propietate incorecta !');
+    }
+    return;
   }
 }
