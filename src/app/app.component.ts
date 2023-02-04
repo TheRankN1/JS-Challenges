@@ -8,6 +8,7 @@ interface Person {
   gender?: string,
   isOnline?: boolean,
   visitCounts: number,
+  likeCounts: number,
 }
 
 @Component({
@@ -30,17 +31,39 @@ export class AppComponent {
   // }
 
   constructor() {
-    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'], isOnline: true , visitCounts : 0});
-    this.createPerson({id: this.idCounter, name: 'Sorinelu', hobbies: ['Fotbal', 'Box', 'Programare'], isOnline: true , visitCounts : 0});
+    this.createPerson({
+      id: this.idCounter,
+      name: 'TheRank',
+      hobbies: ['Fotbal', 'Box'],
+      isOnline: true,
+      visitCounts: 0,
+      likeCounts: 0
+    });
+    this.createPerson({
+      id: this.idCounter,
+      name: 'Sorinelu',
+      hobbies: ['Fotbal', 'Box', 'Programare'],
+      isOnline: true,
+      visitCounts: 0,
+      likeCounts: 0
+    });
     this.createPerson({
       id: this.idCounter,
       name: 'Andreea',
       hobbies: ['Fotbal', 'Box', 'Muzica'],
       gender: 'female',
       isOnline: false,
-      visitCounts : 0
+      visitCounts: 0,
+      likeCounts: 0
     });
-    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: [], isOnline: false , visitCounts : 0});
+    this.createPerson({
+      id: this.idCounter,
+      name: 'Petrut',
+      hobbies: [],
+      isOnline: false,
+      visitCounts: 0,
+      likeCounts: 0
+    });
     // this.deletePerson(1);
     this.addHobby(0, 'Sport');
     this.deleteHobby(0, '2lei');
@@ -170,8 +193,9 @@ export class AppComponent {
       this.persons[findIndexPerson].visitCounts++;
     }
   }
-  public sortByPopular(){
-    this.persons.sort(function (a,b){
+
+  public sortByPopular() {
+    this.persons.sort(function (a, b) {
       return b.visitCounts - a.visitCounts;
     })
     console.log(this.persons);
