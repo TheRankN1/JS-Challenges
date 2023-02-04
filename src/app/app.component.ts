@@ -5,8 +5,8 @@ interface Person {
   id: number,
   name: string,
   hobbies: string[],
-  gender?:string,
-  isOnline?:boolean
+  gender?: string,
+  isOnline?: boolean,
 }
 
 @Component({
@@ -28,24 +28,26 @@ export class AppComponent {
   // }
 
   constructor() {
-    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'] ,isOnline:true });
-    this.createPerson({id: this.idCounter, name: 'Andreea', hobbies: ['Fotbal', 'Box', 'Muzica'] , gender:'female'});
-    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: []});
-    this.deletePerson(1);
+    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'], isOnline: true});
+    this.createPerson({id: this.idCounter, name: 'Sorinelu', hobbies: ['Fotbal', 'Box' , 'Programare'], isOnline: true});
+    this.createPerson({id: this.idCounter, name: 'Andreea', hobbies: ['Fotbal', 'Box', 'Muzica'], gender: 'female' , isOnline: false});
+    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: [] ,isOnline:false});
+    // this.deletePerson(1);
     this.addHobby(0, 'Sport');
     this.deleteHobby(0, '2lei');
     this.showOnlyPersonsWithHobby();
     this.showNameAndHobbyToPerson(1);
     this.showBoys();
+    this.toggleAllPersonsOnlineState();
   }
 
   public createPerson(person: Person) {
     this.persons.push(person)
-    if(this.persons[this.idCounter].gender===undefined) {
+    if (this.persons[this.idCounter].gender === undefined) {
       this.persons[this.idCounter].gender = 'male';
     }
-    if(this.persons[this.idCounter].isOnline===undefined) {
-      this.persons[this.idCounter].isOnline = false;
+    if (this.persons[this.idCounter].isOnline === undefined) {
+      this.persons[this.idCounter].isOnline = true;
     }
     this.idCounter++;
     console.log(this.persons);
@@ -95,28 +97,44 @@ export class AppComponent {
     if (findPerson) {
       console.log('Numele persoanei este ' + findPerson.name);
       console.log('Iar aceasta are ca hobby : ' + findPerson.hobbies);
-    }else{
-      console.log('Nu exista persoana cu id : '+id);
-    }
-  }
-  public showBoys(){
-    return this.persons.find(person => person.gender==='male');
-  }
-  public showGirls(){
-    return this.persons.find(person => person.gender==='female');
-  }
-  public showOnlinePersons(){
-    return this.persons.find(person => person.isOnline===true);
-  }
-  public setAllPersonsOnline() {
-    for (let i = 0; i <= this.persons.length; i++) {
-      this.persons[i].isOnline = true;
-    }
-  }
-  public setAllPersonsOffline(){
-    for(let i=0;i<=this.persons.length;i++){
-      this.persons[i].isOnline=false;
+    } else {
+      console.log('Nu exista persoana cu id : ' + id);
     }
   }
 
+  public showBoys() {
+    return this.persons.find(person => person.gender === 'male');
+  }
+
+  public showGirls() {
+    return this.persons.find(person => person.gender === 'female');
+  }
+
+  public showOnlinePersons() {
+    return this.persons.filter(person => person.isOnline === true);
+  }
+
+  public setAllPersonsOnline() {
+    for (let i = 0; i < this.persons.length; i++) {
+      this.persons[i].isOnline = true;
+    }
+  }
+
+  public setAllPersonsOffline() {
+    for (let i = 0; i < this.persons.length; i++) {
+      this.persons[i].isOnline = false;
+    }
+  }
+
+  public toggleAllPersonsOnlineState() {
+    const onlinePersons = this.showOnlinePersons().length;
+    if(onlinePersons===0){
+      console.log('Toate persoanele sunt offline');
+    }
+    if(onlinePersons===this.persons.length){
+      this.setAllPersonsOffline();
+    }else {
+      this.setAllPersonsOnline();
+    }
+  }
 }
