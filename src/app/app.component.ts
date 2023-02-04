@@ -29,9 +29,11 @@ export class AppComponent {
     this.createPerson({id:this.idCounter , name:'TheRank' , hobbies:['Fotbal' , 'Box']});
     this.createPerson({id:this.idCounter , name:'Petrut' , hobbies:['Fotbal' , 'Box' , 'Muzica']});
     this.createPerson({id:this.idCounter , name:'Petrut' , hobbies:['Fotbal' , 'Box' , 'Muzica']});
+    this.createPerson({id:this.idCounter , name:'Petrut' , hobbies:[]});
     this.deletePerson(1);
     this.addHobby(0 , 'Sport');
-   this.deleteHobby(0 , '2lei');
+    this.deleteHobby(0 , '2lei');
+    this.showOnlyPersonsWithHobby();
   }
 
   public createPerson (person:Person){
@@ -74,4 +76,8 @@ export class AppComponent {
     }
   }
 
+  public showOnlyPersonsWithHobby(){
+  const result = this.persons.filter(person => person.hobbies.length>0);
+  console.log(result);
+  }
 }
