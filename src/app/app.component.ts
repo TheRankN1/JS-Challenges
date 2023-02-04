@@ -95,4 +95,10 @@ export class AppComponent {
       console.log('Nu exista persoana cu id : '+id);
     }
   }
+  public showBoys(){
+    return this.persons.find(person => person.gender==='male');
+  }
+  public showGirls(){
+    return this.persons.find(person => person.gender==='female');
+  }
 }
