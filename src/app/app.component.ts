@@ -75,6 +75,7 @@ export class AppComponent {
     this.personVisited(2);
     this.sortByPopular();
     this.likePerson(2);
+    this.totalLikes();
   }
 
   public createPerson(person: Person) {
@@ -214,5 +215,13 @@ export class AppComponent {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts--;
     }
+  }
+  public totalLikes(){
+    let sumOfLikes=0;
+    for (let i=0; i<this.persons.length;i++){
+      sumOfLikes+=this.persons[i].likeCounts;
+    }
+    console.log(sumOfLikes)
+    return sumOfLikes;
   }
 }
