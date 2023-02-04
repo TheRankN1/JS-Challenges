@@ -78,7 +78,8 @@ export class AppComponent {
     this.totalLikes();
     this.sortByPropName('visitCounts');
     this.filterPerson('Sor');
-   console.log( this.totalBy('visitCounts'));
+    console.log(this.totalBy('visitCounts'));
+    console.log(this.countByGender('male'));
   }
 
   public createPerson(person: Person) {
@@ -306,29 +307,52 @@ export class AppComponent {
     }
   }
 
-  public filterPerson(name:string){
-    for(let i=0 ; i<this.persons.length ; i++){
-      if(this.persons[i].name.includes(name)){
+  public filterPerson(name: string) {
+    for (let i = 0; i < this.persons.length; i++) {
+      if (this.persons[i].name.includes(name)) {
         console.log(this.persons[i].name)
       }
     }
   }
-  public totalBy(propName:string){
-    let sumLikes=0 , sumHobbies=0 , sumVisit=0;
-    for(let i=0;i<this.persons.length;i++){
-      sumLikes+=this.persons[i].likeCounts;
-      sumVisit+=this.persons[i].visitCounts;
-      sumHobbies+=this.persons[i].hobbies.length;
+
+  public totalBy(propName: string) {
+    let sumLikes = 0, sumHobbies = 0, sumVisit = 0;
+    for (let i = 0; i < this.persons.length; i++) {
+      sumLikes += this.persons[i].likeCounts;
+      sumVisit += this.persons[i].visitCounts;
+      sumHobbies += this.persons[i].hobbies.length;
     }
-    if(propName==='likePerson'){
+    if (propName === 'likePerson') {
       return sumLikes;
-    }else if(propName === 'hobbies'){
+    } else if (propName === 'hobbies') {
       return sumHobbies;
-    }else if(propName === 'visitCounts'){
+    } else if (propName === 'visitCounts') {
       return sumVisit;
-    }else{
+    } else {
       console.log('Ati introdus o propietate incorecta !');
     }
     return;
   }
+
+  public countByGender(gender: string) {
+    let sumGenderMale = 0, sumGenderFemale = 0;
+    for (let i = 0; i < this.persons.length; i++) {
+      if(this.persons[i].gender==='male'){
+        sumGenderMale++;
+      }
+      if(this.persons[i].gender==='female'){
+        sumGenderFemale++;
+      }
+    }
+    if(gender==='male'){
+      return sumGenderMale;
+    }else if(gender==='female'){
+      return sumGenderFemale;
+    }else{
+      console.log('Ati introdus un gen incorect');
+    }
+    return ;
+  }
+
+
 }
