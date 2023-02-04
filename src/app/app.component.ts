@@ -31,6 +31,7 @@ export class AppComponent {
     this.createPerson({id:this.idCounter , name:'Petrut' , hobbies:['Fotbal' , 'Box' , 'Muzica']});
     this.deletePerson(1);
     this.addHobby(0 , 'Sport');
+   this.deleteHobby(0 , '2lei');
   }
 
   public createPerson (person:Person){
@@ -58,6 +59,18 @@ export class AppComponent {
       }
     }else{
       console.log('Nu exista persoana cu id '+id);
+    }
+  }
+
+  public deleteHobby(id:number , deletedHobby:string){
+    const findPerson = this.persons.find(person => person.id===id);
+    if(findPerson!=undefined) {
+      const findHobbyIndex = findPerson.hobbies.indexOf(deletedHobby);
+      if (findHobbyIndex === -1) {
+        console.log('Nu exista hobby ul : ' + deletedHobby);
+      } else {
+        findPerson.hobbies.splice(findHobbyIndex, 1);
+      }
     }
   }
 
