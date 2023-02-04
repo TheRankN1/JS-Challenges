@@ -77,6 +77,7 @@ export class AppComponent {
     this.likePerson(2);
     this.totalLikes();
     this.sortByPropName('visitCounts');
+    this.filterPerson('Sor');
   }
 
   public createPerson(person: Person) {
@@ -301,6 +302,14 @@ export class AppComponent {
     }
     if (propName === 'gender') {
       this.sortByGender();
+    }
+  }
+
+  public filterPerson(name:string){
+    for(let i=0 ; i<this.persons.length ; i++){
+      if(this.persons[i].name.includes(name)){
+        console.log(this.persons[i].name)
+      }
     }
   }
 }
