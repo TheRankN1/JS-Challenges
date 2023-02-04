@@ -7,6 +7,7 @@ interface Person {
   hobbies: string[],
   gender?: string,
   isOnline?: boolean,
+  visitCounts: number,
 }
 
 @Component({
@@ -21,6 +22,7 @@ export class AppComponent {
   public persons: Person[] = [];
   public idCounter = 0;
   public name = '';
+
   // public person : Person = {
   //   id : this.idCounter,
   //   name: this.name,
@@ -28,10 +30,17 @@ export class AppComponent {
   // }
 
   constructor() {
-    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'], isOnline: true});
-    this.createPerson({id: this.idCounter, name: 'Sorinelu', hobbies: ['Fotbal', 'Box' , 'Programare'], isOnline: true});
-    this.createPerson({id: this.idCounter, name: 'Andreea', hobbies: ['Fotbal', 'Box', 'Muzica'], gender: 'female' , isOnline: false});
-    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: [] ,isOnline:false});
+    this.createPerson({id: this.idCounter, name: 'TheRank', hobbies: ['Fotbal', 'Box'], isOnline: true , visitCounts : 0});
+    this.createPerson({id: this.idCounter, name: 'Sorinelu', hobbies: ['Fotbal', 'Box', 'Programare'], isOnline: true , visitCounts : 0});
+    this.createPerson({
+      id: this.idCounter,
+      name: 'Andreea',
+      hobbies: ['Fotbal', 'Box', 'Muzica'],
+      gender: 'female',
+      isOnline: false,
+      visitCounts : 0
+    });
+    this.createPerson({id: this.idCounter, name: 'Petrut', hobbies: [], isOnline: false , visitCounts : 0});
     // this.deletePerson(1);
     this.addHobby(0, 'Sport');
     this.deleteHobby(0, '2lei');
@@ -39,10 +48,14 @@ export class AppComponent {
     this.showNameAndHobbyToPerson(1);
     this.showBoys();
     this.toggleAllPersonsOnlineState();
+    this.groupPersonHobbies([1, 2], 'LOL');
+    this.personVisited(2);
+    this.sortByPopular();
   }
 
   public createPerson(person: Person) {
     this.persons.push(person)
+
     if (this.persons[this.idCounter].gender === undefined) {
       this.persons[this.idCounter].gender = 'male';
     }
@@ -128,13 +141,39 @@ export class AppComponent {
 
   public toggleAllPersonsOnlineState() {
     const onlinePersons = this.showOnlinePersons().length;
-    if(onlinePersons===0){
+    if (onlinePersons === 0) {
       console.log('Toate persoanele sunt offline');
     }
-    if(onlinePersons===this.persons.length){
+    if (onlinePersons === this.persons.length) {
       this.setAllPersonsOffline();
-    }else {
+    } else {
       this.setAllPersonsOnline();
     }
+  }
+
+  public groupPersonHobbies(arrids: number[], newHobby: string) {
+    for (let i = 0; i < arrids.length; i++) {
+      this.addHobby(arrids[i], newHobby);
+    }
+  }
+
+  public groupPersonDelete(arrids: number[]) {
+    for (let i = 0; i < arrids.length; i++) {
+      this.deletePerson(arrids[i]);
+    }
+  }
+
+  public personVisited(id: number) {
+    const findPerson = this.persons.find(person => person.id === id);
+    if (findPerson != undefined) {
+      const findIndexPerson = this.persons.indexOf(findPerson);
+      this.persons[findIndexPerson].visitCounts++;
+    }
+  }
+  public sortByPopular(){
+    this.persons.sort(function (a,b){
+      return b.visitCounts - a.visitCounts;
+    })
+    console.log(this.persons);
   }
 }
