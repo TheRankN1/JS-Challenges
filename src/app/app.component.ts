@@ -105,4 +105,18 @@ export class AppComponent {
   public showGirls(){
     return this.persons.find(person => person.gender==='female');
   }
+  public showOnlinePersons(){
+    return this.persons.find(person => person.isOnline===true);
+  }
+  public setAllPersonsOnline() {
+    for (let i = 0; i <= this.persons.length; i++) {
+      this.persons[i].isOnline = true;
+    }
+  }
+  public setAllPersonsOffline(){
+    for(let i=0;i<=this.persons.length;i++){
+      this.persons[i].isOnline=false;
+    }
+  }
+
 }
