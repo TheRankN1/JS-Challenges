@@ -117,11 +117,11 @@ export class AppComponent {
   }
 
   public showBoys() {
-    return this.persons.filter(person => person.gender === 'male');
+    return this.persons.filter(person => person.gender === GenderEnum.male);
   }
 
   public showGirls() {
-    return this.persons.filter(person => person.gender === 'female');
+    return this.persons.filter(person => person.gender === GenderEnum.female);
   }
 
   public showOnlinePersons() {
@@ -236,27 +236,24 @@ export class AppComponent {
     } else if (propName === 'visitCounts') {
       return sumVisit;
     } else {
-      console.log('Ati introdus o propietate incorecta !');
+      console.warn('Ati introdus o propietate incorecta !');
     }
     return;
   }
 
-  public countByGender(gender: string) {
-    let sumGenderMale = 0, sumGenderFemale = 0;
+  public countByGender(gender: GenderEnum) {
+    let sumGenderMale = 0;
     for (let i = 0; i < this.persons.length; i++) {
-      if (this.persons[i].gender === 'male') {
+      if (this.persons[i].gender === GenderEnum.male) {
         sumGenderMale++;
       }
-      if (this.persons[i].gender === 'female') {
-        sumGenderFemale++;
-      }
     }
-    if (gender === 'male') {
+    if (gender === GenderEnum.male) {
       return sumGenderMale;
-    } else if (gender === 'female') {
-      return sumGenderFemale;
+    } else if (gender === GenderEnum.female) {
+      return this.persons.length-sumGenderMale;
     } else {
-      console.log('Ati introdus un gen incorect');
+      console.warn('Ati introdus un gen incorect');
     }
     return;
   }
