@@ -162,6 +162,9 @@ export class AppComponent {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].visitCounts++;
     }
+    else {
+      console.warn('Nu exista persoana cu id : ' + id);
+    }
   }
 
   public sortByPopular() : void{
