@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {findIndex} from "rxjs";
+import {GenderEnum} from "./gender.enum";
 
 interface Person {
   id: number,
@@ -19,58 +19,21 @@ interface Person {
 
 
 export class AppComponent {
-  title = 'FunctiiJS';
   public persons: Person[] = [];
   public idCounter = 0;
-  public name = '';
-
-  // public person : Person = {
-  //   id : this.idCounter,
-  //   name: this.name,
-  //   hobbies : []
-  // }
 
   constructor() {
-    this.createPerson({
-      id: this.idCounter,
-      name: 'TheRank',
-      hobbies: ['Fotbal', 'Box'],
-      isOnline: true,
-      visitCounts: 0,
-      likeCounts: 0
-    });
-    this.createPerson({
-      id: this.idCounter,
-      name: 'Sorinelu',
-      hobbies: ['Fotbal', 'Box', 'Programare'],
-      isOnline: true,
-      visitCounts: 0,
-      likeCounts: 0
-    });
-    this.createPerson({
-      id: this.idCounter,
-      name: 'Andreea',
-      hobbies: ['Fotbal', 'Box', 'Muzica'],
-      gender: 'female',
-      isOnline: false,
-      visitCounts: 0,
-      likeCounts: 0
-    });
-    this.createPerson({
-      id: this.idCounter,
-      name: 'Petrut',
-      hobbies: [],
-      isOnline: false,
-      visitCounts: 0,
-      likeCounts: 0
-    });
-    // this.deletePerson(1);
+    this.createPerson('TheRank');
+    this.createPerson('Sorinelu');
+    this.createPerson('Andreea' , GenderEnum.female);
+    this.createPerson('Petrut',);
+    this.deletePerson(10);
     this.addHobby(0, 'Sport');
     this.deleteHobby(0, '2lei');
     this.showOnlyPersonsWithHobby();
     this.showNameAndHobbyToPerson(1);
     this.showBoys();
-    this.toggleAllPersonsOnlineState();
+    // this.toggleAllPersonsOnlineState();
     this.groupPersonHobbies([1, 2], 'LOL');
     this.personVisited(2);
     this.sortByPopular();
@@ -79,18 +42,21 @@ export class AppComponent {
     this.sortByPropName('visitCounts');
     this.filterPerson('Sor');
     console.log(this.totalBy('visitCounts'));
-    console.log(this.countByGender('male'));
+    console.log(this.countByGender(GenderEnum.male));
   }
 
-  public createPerson(person: Person) {
-    this.persons.push(person)
+  public createPerson(name:string , gender:GenderEnum = GenderEnum.male ) {
 
-    if (this.persons[this.idCounter].gender === undefined) {
-      this.persons[this.idCounter].gender = 'male';
-    }
-    if (this.persons[this.idCounter].isOnline === undefined) {
-      this.persons[this.idCounter].isOnline = true;
-    }
+    this.persons.push({
+      id : this.idCounter,
+      name,
+      visitCounts:0,
+      likeCounts:0,
+      gender,
+      isOnline:this._getRandomBoolean(),
+      hobbies:[],
+    })
+
     this.idCounter++;
     console.log(this.persons);
   }
@@ -100,6 +66,8 @@ export class AppComponent {
     if (findPerson != undefined) {
       const findIndex = this.persons.indexOf(findPerson);
       this.persons.splice(findIndex, 1);
+    }else {
+      console.log('Nu exista persoana cu id ' + id);
     }
     console.log(this.persons);
   }
@@ -153,7 +121,7 @@ export class AppComponent {
   }
 
   public showOnlinePersons() {
-    return this.persons.filter(person => person.isOnline === true);
+    return this.persons.filter(person => person.isOnline);
   }
 
   public setAllPersonsOnline() {
@@ -201,8 +169,8 @@ export class AppComponent {
   }
 
   public sortByPopular() {
-    this.persons.sort(function (a, b) {
-      return b.visitCounts - a.visitCounts;
+    this.persons.sort(function (firstPerson, secondPerson) {
+      return secondPerson.visitCounts - firstPerson.visitCounts;
     })
     console.log(this.persons);
   }
@@ -233,8 +201,8 @@ export class AppComponent {
   }
 
   public sortById() {
-    this.persons.sort(function (a, b) {
-      return b.id - a.id;
+    this.persons.sort(function (firstPerson, secondPerson) {
+      return secondPerson.id - firstPerson.id;
     })
     console.log(this.persons);
   }
@@ -337,22 +305,24 @@ export class AppComponent {
   public countByGender(gender: string) {
     let sumGenderMale = 0, sumGenderFemale = 0;
     for (let i = 0; i < this.persons.length; i++) {
-      if(this.persons[i].gender==='male'){
+      if (this.persons[i].gender === 'male') {
         sumGenderMale++;
       }
-      if(this.persons[i].gender==='female'){
+      if (this.persons[i].gender === 'female') {
         sumGenderFemale++;
       }
     }
-    if(gender==='male'){
+    if (gender === 'male') {
       return sumGenderMale;
-    }else if(gender==='female'){
+    } else if (gender === 'female') {
       return sumGenderFemale;
-    }else{
+    } else {
       console.log('Ati introdus un gen incorect');
     }
-    return ;
+    return;
   }
-
-
+  private _getRandomBoolean():boolean{
+   const result = Math.random() > 0.5;
+    return result;
+  }
 }
