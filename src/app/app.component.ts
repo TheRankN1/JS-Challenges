@@ -117,11 +117,11 @@ export class AppComponent {
   }
 
   public showBoys() {
-    return this.persons.find(person => person.gender === 'male');
+    return this.persons.filter(person => person.gender === 'male');
   }
 
   public showGirls() {
-    return this.persons.find(person => person.gender === 'female');
+    return this.persons.filter(person => person.gender === 'female');
   }
 
   public showOnlinePersons() {
