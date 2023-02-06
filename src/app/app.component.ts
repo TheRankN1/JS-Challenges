@@ -45,7 +45,7 @@ export class AppComponent {
     console.log(this.countByGender(GenderEnum.male));
   }
 
-  public createPerson(name: string, gender: GenderEnum = GenderEnum.male) {
+  public createPerson(name: string, gender: GenderEnum = GenderEnum.male) :void {
 
     this.persons.push({
       id: this.idCounter,
@@ -61,7 +61,7 @@ export class AppComponent {
     console.log(this.persons);
   }
 
-  public deletePerson(id: number) {
+  public deletePerson(id: number) :void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndex = this.persons.indexOf(findPerson);
@@ -72,7 +72,7 @@ export class AppComponent {
     console.log(this.persons);
   }
 
-  public addHobby(id: number, newHobby: string) {
+  public addHobby(id: number, newHobby: string) :void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       if (findPerson.hobbies.includes(newHobby)) {
@@ -85,7 +85,7 @@ export class AppComponent {
     }
   }
 
-  public deleteHobby(id: number, deletedHobby: string) {
+  public deleteHobby(id: number, deletedHobby: string) :void {
     const findPerson = this._getPersonById(id);
     if (findPerson != undefined) {
       const findHobbyIndex = findPerson.hobbies.indexOf(deletedHobby);
@@ -97,12 +97,12 @@ export class AppComponent {
     }
   }
 
-  public showOnlyPersonsWithHobby() {
+  public showOnlyPersonsWithHobby() : void {
     const result = this.persons.filter(person => person.hobbies.length > 0);
     console.log(result);
   }
 
-  public showNameAndHobbyToPerson(id: number) {
+  public showNameAndHobbyToPerson(id: number) :void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       console.log('Numele persoanei este ' + findPerson.name);
@@ -116,31 +116,31 @@ export class AppComponent {
     }
   }
 
-  public showBoys() {
+  public showBoys() : Person[] {
     return this.persons.filter(person => person.gender === GenderEnum.male);
   }
 
-  public showGirls() {
+  public showGirls() : Person[]{
     return this.persons.filter(person => person.gender === GenderEnum.female);
   }
 
-  public showOnlinePersons() {
+  public showOnlinePersons() : Person[]{
     return this.persons.filter(person => person.isOnline);
   }
 
-  public setAllPersonsOnline() {
+  public setAllPersonsOnline() : void {
     for (let i = 0; i < this.persons.length; i++) {
       this.persons[i].isOnline = true;
     }
   }
 
-  public setAllPersonsOffline() {
+  public setAllPersonsOffline() : void{
     for (let i = 0; i < this.persons.length; i++) {
       this.persons[i].isOnline = false;
     }
   }
 
-  public toggleAllPersonsOnlineState() {
+  public toggleAllPersonsOnlineState() : void{
     const onlinePersons = this.showOnlinePersons().length;
     if (onlinePersons === 0) {
       console.log('Toate persoanele sunt offline');
@@ -152,19 +152,19 @@ export class AppComponent {
     }
   }
 
-  public groupPersonHobbies(arrids: number[], newHobby: string) {
+  public groupPersonHobbies(arrids: number[], newHobby: string) : void{
     for (let i = 0; i < arrids.length; i++) {
       this.addHobby(arrids[i], newHobby);
     }
   }
 
-  public groupPersonDelete(arrids: number[]) {
+  public groupPersonDelete(arrids: number[]) : void{
     for (let i = 0; i < arrids.length; i++) {
       this.deletePerson(arrids[i]);
     }
   }
 
-  public personVisited(id: number) {
+  public personVisited(id: number) : void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
@@ -172,14 +172,14 @@ export class AppComponent {
     }
   }
 
-  public sortByPopular() {
+  public sortByPopular() : void{
     this.persons.sort(function (a, b) {
       return a.visitCounts - b.visitCounts;
     })
     console.log(this.persons);
   }
 
-  public likePerson(id: number) {
+  public likePerson(id: number) : void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
@@ -187,7 +187,7 @@ export class AppComponent {
     }
   }
 
-  public dislikePerson(id: number) {
+  public dislikePerson(id: number) : void{
     const findPerson = this._getPersonById(id);;
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
@@ -195,7 +195,7 @@ export class AppComponent {
     }
   }
 
-  public totalLikes() {
+  public totalLikes() : number {
     let sumOfLikes = 0;
     for (let i = 0; i < this.persons.length; i++) {
       sumOfLikes += this.persons[i].likeCounts;
@@ -204,7 +204,7 @@ export class AppComponent {
     return sumOfLikes;
   }
 
-  public sortByPropName(propName: any) {
+  public sortByPropName(propName: any) : void {
     this.persons.sort(function (a, b) {
       if( [a][propName] < [b][propName]){
         return -1
@@ -214,7 +214,7 @@ export class AppComponent {
     })
   }
 
-  public filterPerson(name: string) {
+  public filterPerson(name: string) : void {
     for (let i = 0; i < this.persons.length; i++) {
       if (this.persons[i].name.includes(name)) {
         console.log(this.persons[i].name)
@@ -222,7 +222,7 @@ export class AppComponent {
     }
   }
 
-  public totalBy(propName: string) {
+  public totalBy(propName: string) : number | undefined {
     let sumLikes = 0, sumHobbies = 0, sumVisit = 0;
     for (let i = 0; i < this.persons.length; i++) {
       sumLikes += this.persons[i].likeCounts;
@@ -241,7 +241,7 @@ export class AppComponent {
     return;
   }
 
-  public countByGender(gender: GenderEnum) {
+  public countByGender(gender: GenderEnum) : number | undefined{
     let sumGenderMale = 0;
     for (let i = 0; i < this.persons.length; i++) {
       if (this.persons[i].gender === GenderEnum.male) {
@@ -254,8 +254,9 @@ export class AppComponent {
       return this.persons.length-sumGenderMale;
     } else {
       console.warn('Ati introdus un gen incorect');
+      return;
     }
-    return;
+
   }
 
   private static _getRandomBoolean(): boolean {
