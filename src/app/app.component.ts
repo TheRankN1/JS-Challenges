@@ -25,7 +25,7 @@ export class AppComponent {
   constructor() {
     this.createPerson('TheRank');
     this.createPerson('Sorinelu');
-    this.createPerson('Andreea' , GenderEnum.female);
+    this.createPerson('Andreea', GenderEnum.female);
     this.createPerson('Petrut',);
     this.deletePerson(10);
     this.addHobby(0, 'Sport');
@@ -45,16 +45,16 @@ export class AppComponent {
     console.log(this.countByGender(GenderEnum.male));
   }
 
-  public createPerson(name:string , gender:GenderEnum = GenderEnum.male ) {
+  public createPerson(name: string, gender: GenderEnum = GenderEnum.male) {
 
     this.persons.push({
-      id : this.idCounter,
+      id: this.idCounter,
       name,
-      visitCounts:0,
-      likeCounts:0,
+      visitCounts: 0,
+      likeCounts: 0,
       gender,
-      isOnline:this._getRandomBoolean(),
-      hobbies:[],
+      isOnline: AppComponent._getRandomBoolean(),
+      hobbies: [],
     })
 
     this.idCounter++;
@@ -62,31 +62,31 @@ export class AppComponent {
   }
 
   public deletePerson(id: number) {
-    const findPerson = this.persons.find(person => person.id === id);
-    if (findPerson != undefined) {
+    const findPerson = this._getPersonById(id);
+    if (findPerson) {
       const findIndex = this.persons.indexOf(findPerson);
       this.persons.splice(findIndex, 1);
-    }else {
-      console.log('Nu exista persoana cu id ' + id);
+    } else {
+      console.warn('Nu exista persoana cu id ' + id);
     }
     console.log(this.persons);
   }
 
   public addHobby(id: number, newHobby: string) {
-    const findPerson = this.persons.find(person => person.id === id);
+    const findPerson = this._getPersonById(id);
     if (findPerson) {
       if (findPerson.hobbies.includes(newHobby)) {
-        console.log('Acest hobby exista deja , adaugati altul')
+        console.warn('Acest hobby exista deja , adaugati altul')
       } else {
         findPerson.hobbies.push(newHobby)
       }
     } else {
-      console.log('Nu exista persoana cu id ' + id);
+      console.warn('Nu exista persoana cu id ' + id);
     }
   }
 
   public deleteHobby(id: number, deletedHobby: string) {
-    const findPerson = this.persons.find(person => person.id === id);
+    const findPerson = this._getPersonById(id);
     if (findPerson != undefined) {
       const findHobbyIndex = findPerson.hobbies.indexOf(deletedHobby);
       if (findHobbyIndex === -1) {
@@ -103,12 +103,16 @@ export class AppComponent {
   }
 
   public showNameAndHobbyToPerson(id: number) {
-    const findPerson = this.persons.find(person => person.id === id);
+    const findPerson = this._getPersonById(id);
     if (findPerson) {
       console.log('Numele persoanei este ' + findPerson.name);
+      if(findPerson.hobbies.length>0)
       console.log('Iar aceasta are ca hobby : ' + findPerson.hobbies);
+      else {
+        console.warn('Iar aceasta nu are hobby uri')
+      }
     } else {
-      console.log('Nu exista persoana cu id : ' + id);
+      console.warn('Nu exista persoana cu id : ' + id);
     }
   }
 
@@ -161,8 +165,8 @@ export class AppComponent {
   }
 
   public personVisited(id: number) {
-    const findPerson = this.persons.find(person => person.id === id);
-    if (findPerson != undefined) {
+    const findPerson = this._getPersonById(id);
+    if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].visitCounts++;
     }
@@ -176,16 +180,16 @@ export class AppComponent {
   }
 
   public likePerson(id: number) {
-    const findPerson = this.persons.find(person => person.id === id);
-    if (findPerson != undefined) {
+    const findPerson = this._getPersonById(id);
+    if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts++;
     }
   }
 
   public dislikePerson(id: number) {
-    const findPerson = this.persons.find(person => person.id === id);
-    if (findPerson != undefined) {
+    const findPerson = this._getPersonById(id);;
+    if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts--;
     }
@@ -321,8 +325,13 @@ export class AppComponent {
     }
     return;
   }
-  private _getRandomBoolean():boolean{
-   const result = Math.random() > 0.5;
-    return result;
+
+  private static _getRandomBoolean(): boolean {
+    return Math.random() > 0.5;
+  }
+
+
+  private _getPersonById(id: number): Person | undefined {
+    return this.persons.find(person => person.id === id);
   }
 }
