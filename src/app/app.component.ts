@@ -39,7 +39,7 @@ export class AppComponent {
     this.sortByPopular();
     this.likePerson(2);
     this.totalLikes();
-    this.sortByPropName('visitCounts');
+    this.sortByPropName('name');
     this.filterPerson('Sor');
     console.log(this.totalBy('visitCounts'));
     console.log(this.countByGender(GenderEnum.male));
@@ -204,79 +204,14 @@ export class AppComponent {
     return sumOfLikes;
   }
 
-  public sortById() {
+  public sortByPropName(propName: any) {
     this.persons.sort(function (a, b) {
-      return a.id - b.id;
+      if( [a][propName] < [b][propName]){
+        return -1
+      }else {
+        return 1;
+      }
     })
-    console.log(this.persons);
-  }
-
-  public sortByName() {
-    //BubbleSort
-    for (let i = 0; i < this.persons.length; i++) {
-      for (let j = 0; j < (this.persons.length - i - 1); j++) {
-        if (this.persons[j].name > this.persons[j + 1].name) {
-          let auxiliar = this.persons[j];
-          this.persons[j] = this.persons[j + 1];
-          this.persons[j + 1] = auxiliar;
-        }
-      }
-    }
-    console.log(this.persons);
-  }
-
-  public sortByLikeCount() {
-    this.persons.sort(function (a, b) {
-      return b.likeCounts - a.likeCounts;
-    })
-    console.log(this.persons);
-  }
-
-  public sortByIsOnline() {
-    for (let i = 0; i < this.persons.length; i++) {
-      for (let j = 0; j < (this.persons.length - i - 1); j++) {
-        if (this.persons[j].isOnline > this.persons[j + 1].isOnline) {
-          let auxiliar = this.persons[j];
-          this.persons[j] = this.persons[j + 1];
-          this.persons[j + 1] = auxiliar;
-        }
-      }
-    }
-  }
-
-  public sortByGender() {
-    for (let i = 0; i < this.persons.length; i++) {
-      for (let j = 0; j < (this.persons.length - i - 1); j++) {
-        // @ts-ignore
-        if (this.persons[j].gender > this.persons[j + 1].gender) {
-          let auxiliar = this.persons[j];
-          this.persons[j] = this.persons[j + 1];
-          this.persons[j + 1] = auxiliar;
-        }
-      }
-    }
-  }
-
-
-  public sortByPropName(propName: string) {
-    if (propName === 'id') {
-      this.sortById();
-    }
-    if (propName === 'name') {
-      this.sortByName();
-    }
-    if (propName === 'likeCounts') {
-      this.sortByLikeCount();
-    }
-    if (propName === 'visitCounts') {
-      this.sortByPopular();
-    }
-    if (propName === 'isOnline') {
-      this.sortByIsOnline();
-    }
-    if (propName === 'gender') {
-      this.sortByGender();
-    }
   }
 
   public filterPerson(name: string) {
