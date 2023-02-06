@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
 import {Person} from "./person.interface";
-
+import {messages} from'./messages';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +59,7 @@ export class AppComponent {
       const findIndex = this.persons.indexOf(findPerson);
       this.persons.splice(findIndex, 1);
     } else {
-      console.warn('Nu exista persoana cu id ' + id);
+      console.warn(messages.person_message + id + messages.not_exist);
     }
     console.log(this.persons);
   }
@@ -68,12 +68,12 @@ export class AppComponent {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       if (findPerson.hobbies.includes(newHobby)) {
-        console.warn('Acest hobby exista deja , adaugati altul')
+        console.warn('This hobby exist already  , try again')
       } else {
         findPerson.hobbies.push(newHobby)
       }
     } else {
-      console.warn('Nu exista persoana cu id ' + id);
+      console.warn(messages.person_message + id + messages.not_exist);
     }
   }
 
@@ -82,7 +82,7 @@ export class AppComponent {
     if (findPerson != undefined) {
       const findHobbyIndex = findPerson.hobbies.indexOf(deletedHobby);
       if (findHobbyIndex === -1) {
-        console.log('Nu exista hobby ul : ' + deletedHobby);
+        console.log("This hobby doesn't exist : " + deletedHobby);
       } else {
         findPerson.hobbies.splice(findHobbyIndex, 1);
       }
@@ -97,14 +97,14 @@ export class AppComponent {
   public showNameAndHobbyToPerson(id: number) :void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
-      console.log('Numele persoanei este ' + findPerson.name);
+      console.log('The name of the person is ' + findPerson.name);
       if(findPerson.hobbies.length>0)
-      console.log('Iar aceasta are ca hobby : ' + findPerson.hobbies);
+      console.log('And this persons have hobbies : ' + findPerson.hobbies);
       else {
-        console.warn('Iar aceasta nu are hobby uri')
+        console.warn("And this person doesn't have hobbies !")
       }
     } else {
-      console.warn('Nu exista persoana cu id : ' + id);
+      console.warn(messages.person_message + id + messages.not_exist);
     }
   }
 
@@ -135,7 +135,7 @@ export class AppComponent {
   public toggleAllPersonsOnlineState() : void{
     const onlinePersons = this.showOnlinePersons().length;
     if (onlinePersons === 0) {
-      console.log('Toate persoanele sunt offline');
+      console.warn('All persons are offline !');
     }
     if (onlinePersons === this.persons.length) {
       this.setAllPersonsOffline();
@@ -163,7 +163,7 @@ export class AppComponent {
       this.persons[findIndexPerson].visitCounts++;
     }
     else {
-      console.warn('Nu exista persoana cu id : ' + id);
+      console.warn(messages.person_message + id + messages.not_exist);
     }
   }
 
@@ -231,7 +231,7 @@ export class AppComponent {
     } else if (propName === 'visitCounts') {
       return sumVisit;
     } else {
-      console.warn('Ati introdus o propietate incorecta !');
+      console.warn('You input a wrong prop !');
     }
     return;
   }
@@ -248,7 +248,7 @@ export class AppComponent {
     } else if (gender === GenderEnum.female) {
       return this.persons.length-sumGenderMale;
     } else {
-      console.warn('Ati introdus un gen incorect');
+      console.warn('You input an incorrect gender !');
       return;
     }
 
