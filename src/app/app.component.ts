@@ -1,15 +1,7 @@
 import {Component} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
+import {Person} from "./person.interface";
 
-interface Person {
-  id: number,
-  name: string,
-  hobbies: string[],
-  gender?: string,
-  isOnline: boolean,
-  visitCounts: number,
-  likeCounts: number,
-}
 
 @Component({
   selector: 'app-root',
