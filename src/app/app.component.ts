@@ -32,7 +32,7 @@ export class AppComponent {
     this.deleteHobby(0, '2lei');
     this.showOnlyPersonsWithHobby();
     this.showNameAndHobbyToPerson(1);
-    this.showBoys();
+    console.log(this.showBoys());
     // this.toggleAllPersonsOnlineState();
     this.groupPersonHobbies([1, 2], 'LOL');
     this.personVisited(2);
@@ -173,8 +173,8 @@ export class AppComponent {
   }
 
   public sortByPopular() {
-    this.persons.sort(function (firstPerson, secondPerson) {
-      return secondPerson.visitCounts - firstPerson.visitCounts;
+    this.persons.sort(function (a, b) {
+      return a.visitCounts - b.visitCounts;
     })
     console.log(this.persons);
   }
@@ -205,8 +205,8 @@ export class AppComponent {
   }
 
   public sortById() {
-    this.persons.sort(function (firstPerson, secondPerson) {
-      return secondPerson.id - firstPerson.id;
+    this.persons.sort(function (a, b) {
+      return a.id - b.id;
     })
     console.log(this.persons);
   }
