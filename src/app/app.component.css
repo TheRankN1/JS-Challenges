@@ -1,0 +1,28 @@
+.isOnline-circle{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid gray;
+  background: white;
+}
+.container{
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+  justify-content: center;
+}
+.title{
+  padding: 10px;
+  text-align: center;
+}
+table{
+  font-size: 16px;
+}
+th{
+  background: #d4cccc;
+  font-weight: 500;
+  padding: 10px;
+  margin : 0;
+  border-spacing: 0;
+}
+
