@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
 import {Person} from "./person.interface";
 import {messages} from'./messages';
+import {InputComponent} from "./components/input/input.component";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,9 @@ export class AppComponent {
   public persons: Person[] = [];
   public idCounter = 0;
 
-  constructor() {
+  constructor(
+    public dialogOpen : MatDialog
+  ) {
     this.createPerson('TheRank');
     this.createPerson('Sorinelu');
     this.createPerson('Andreea', GenderEnum.female);
@@ -35,6 +39,7 @@ export class AppComponent {
     this.filterPerson('Sor');
     console.log(this.totalBy('visitCounts'));
     console.log(this.countByGender(GenderEnum.male));
+
   }
 
   public createPerson(name: string, gender: GenderEnum = GenderEnum.male) :void {
@@ -51,6 +56,15 @@ export class AppComponent {
 
     this.idCounter++;
     console.log(this.persons);
+  }
+  openDialog()
+  {
+    const dialogRef = this.dialogOpen.open(InputComponent, {
+      width: '600px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   public deletePerson(id: number) :void {
@@ -263,3 +277,4 @@ export class AppComponent {
     return this.persons.find(person => person.id === id);
   }
 }
+

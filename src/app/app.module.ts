@@ -6,6 +6,8 @@ import { InputComponent } from './components/input/input.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 ;
 
 @NgModule({
@@ -17,7 +19,9 @@ import {MatButtonModule} from "@angular/material/button";
     BrowserModule,
     MatSlideToggleModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
