@@ -1,0 +1,10 @@
+<form action="" [formGroup]="createPersonFormGroup">
+  <input type="text" placeholder="name" formControlName="name">
+<!--  <person-form-modal type="text" placeholder="hobbies" formControlName="hobbies">-->
+<!--  <person-form-modal type="text" placeholder="gender" formControlName="gender">-->
+  <div class="buttons">
+    <button (click)="onCancelDialog()" mat-raised-button>Anulare</button>
+    <button (click)="onAddPerson()" mat-flat-button>Adauga persoana noua</button>
+  </div>
+</form>
+<!-- de refactorizat-->

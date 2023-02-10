@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
 import {Person} from "./person.interface";
-import {messages} from'./messages';
-import {InputComponent} from "./components/input/input.component";
+import {messages} from './messages';
+import {PersonFormModalComponent} from "./components/person-form-modal/person-form-modal.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
@@ -17,32 +17,12 @@ export class AppComponent {
   public idCounter = 0;
 
   constructor(
-    public dialogOpen : MatDialog
+    public dialogOpen: MatDialog
   ) {
-    this.createPerson('TheRank');
-    this.createPerson('Sorinelu');
-    this.createPerson('Andreea', GenderEnum.female);
-    this.createPerson('Petrut',);
-    this.deletePerson(10);
-    this.addHobby(0, 'Sport');
-    this.deleteHobby(0, '2lei');
-    this.showOnlyPersonsWithHobby();
-    this.showNameAndHobbyToPerson(1);
-    console.log(this.showBoys());
-    // this.toggleAllPersonsOnlineState();
-    this.groupPersonHobbies([1, 2], 'LOL');
-    this.personVisited(2);
-    this.sortByPopular();
-    this.likePerson(2);
-    this.totalLikes();
-    this.sortByPropName('name');
-    this.filterPerson('Sor');
-    console.log(this.totalBy('visitCounts'));
-    console.log(this.countByGender(GenderEnum.male));
 
   }
 
-  public createPerson(name: string, gender: GenderEnum = GenderEnum.male) :void {
+  public createPerson(name: string, gender: GenderEnum = GenderEnum.male): void {
 
     this.persons.push({
       id: this.idCounter,
@@ -55,19 +35,21 @@ export class AppComponent {
     })
 
     this.idCounter++;
-    console.log(this.persons);
+
   }
-  openDialog()
-  {
-    const dialogRef = this.dialogOpen.open(InputComponent, {
-      width: '600px',
-    });
+
+ public openCreatePersonModal() {
+    const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {});
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+     if(!result){
+       return;
+     }else{
+       this.createPerson(result.name);
+     }
     });
   }
 
-  public deletePerson(id: number) :void {
+  public deletePerson(id: number): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndex = this.persons.indexOf(findPerson);
@@ -75,10 +57,10 @@ export class AppComponent {
     } else {
       console.warn(messages.person_message + id + messages.not_exist);
     }
-    console.log(this.persons);
+
   }
 
-  public addHobby(id: number, newHobby: string) :void {
+  public addHobby(id: number, newHobby: string): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       if (findPerson.hobbies.includes(newHobby)) {
@@ -91,7 +73,7 @@ export class AppComponent {
     }
   }
 
-  public deleteHobby(id: number, deletedHobby: string) :void {
+  public deleteHobby(id: number, deletedHobby: string): void {
     const findPerson = this._getPersonById(id);
     if (findPerson != undefined) {
       const findHobbyIndex = findPerson.hobbies.indexOf(deletedHobby);
@@ -103,17 +85,17 @@ export class AppComponent {
     }
   }
 
-  public showOnlyPersonsWithHobby() : void {
+  public showOnlyPersonsWithHobby(): void {
     const result = this.persons.filter(person => person.hobbies.length > 0);
-    console.log(result);
+
   }
 
-  public showNameAndHobbyToPerson(id: number) :void {
+  public showNameAndHobbyToPerson(id: number): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       console.log('The name of the person is ' + findPerson.name);
-      if(findPerson.hobbies.length>0)
-      console.log('And this persons have hobbies : ' + findPerson.hobbies);
+      if (findPerson.hobbies.length > 0)
+        console.log('And this persons have hobbies : ' + findPerson.hobbies);
       else {
         console.warn("And this person doesn't have hobbies !")
       }
@@ -122,31 +104,31 @@ export class AppComponent {
     }
   }
 
-  public showBoys() : Person[] {
+  public showBoys(): Person[] {
     return this.persons.filter(person => person.gender === GenderEnum.male);
   }
 
-  public showGirls() : Person[]{
+  public showGirls(): Person[] {
     return this.persons.filter(person => person.gender === GenderEnum.female);
   }
 
-  public showOnlinePersons() : Person[]{
+  public showOnlinePersons(): Person[] {
     return this.persons.filter(person => person.isOnline);
   }
 
-  public setAllPersonsOnline() : void {
+  public setAllPersonsOnline(): void {
     for (let i = 0; i < this.persons.length; i++) {
       this.persons[i].isOnline = true;
     }
   }
 
-  public setAllPersonsOffline() : void{
+  public setAllPersonsOffline(): void {
     for (let i = 0; i < this.persons.length; i++) {
       this.persons[i].isOnline = false;
     }
   }
 
-  public toggleAllPersonsOnlineState() : void{
+  public toggleAllPersonsOnlineState(): void {
     const onlinePersons = this.showOnlinePersons().length;
     if (onlinePersons === 0) {
       console.warn('All persons are offline !');
@@ -158,37 +140,36 @@ export class AppComponent {
     }
   }
 
-  public groupPersonHobbies(arrids: number[], newHobby: string) : void{
+  public groupPersonHobbies(arrids: number[], newHobby: string): void {
     for (let i = 0; i < arrids.length; i++) {
       this.addHobby(arrids[i], newHobby);
     }
   }
 
-  public groupPersonDelete(arrids: number[]) : void{
+  public groupPersonDelete(arrids: number[]): void {
     for (let i = 0; i < arrids.length; i++) {
       this.deletePerson(arrids[i]);
     }
   }
 
-  public personVisited(id: number) : void {
+  public personVisited(id: number): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].visitCounts++;
-    }
-    else {
+    } else {
       console.warn(messages.person_message + id + messages.not_exist);
     }
   }
 
-  public sortByPopular() : void{
+  public sortByPopular(): void {
     this.persons.sort(function (a, b) {
       return a.visitCounts - b.visitCounts;
     })
-    console.log(this.persons);
+
   }
 
-  public likePerson(id: number) : void {
+  public likePerson(id: number): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
@@ -196,34 +177,35 @@ export class AppComponent {
     }
   }
 
-  public dislikePerson(id: number) : void{
-    const findPerson = this._getPersonById(id);;
+  public dislikePerson(id: number): void {
+    const findPerson = this._getPersonById(id);
+    ;
     if (findPerson) {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts--;
     }
   }
 
-  public totalLikes() : number {
+  public totalLikes(): number {
     let sumOfLikes = 0;
     for (let i = 0; i < this.persons.length; i++) {
       sumOfLikes += this.persons[i].likeCounts;
     }
-    console.log(sumOfLikes)
+
     return sumOfLikes;
   }
 
-  public sortByPropName(propName: any) : void {
+  public sortByPropName(propName: any): void {
     this.persons.sort(function (a, b) {
-      if( [a][propName] < [b][propName]){
+      if ([a][propName] < [b][propName]) {
         return -1
-      }else {
+      } else {
         return 1;
       }
     })
   }
 
-  public filterPerson(name: string) : void {
+  public filterPerson(name: string): void {
     for (let i = 0; i < this.persons.length; i++) {
       if (this.persons[i].name.includes(name)) {
         console.log(this.persons[i].name)
@@ -231,7 +213,7 @@ export class AppComponent {
     }
   }
 
-  public totalBy(propName: string) : number | undefined {
+  public totalBy(propName: string): number | undefined {
     let sumLikes = 0, sumHobbies = 0, sumVisit = 0;
     for (let i = 0; i < this.persons.length; i++) {
       sumLikes += this.persons[i].likeCounts;
@@ -245,12 +227,12 @@ export class AppComponent {
     } else if (propName === 'visitCounts') {
       return sumVisit;
     } else {
-      console.warn('You input a wrong prop !');
+      console.warn('You person-form-modal a wrong prop !');
     }
     return;
   }
 
-  public countByGender(gender: GenderEnum) : number | undefined{
+  public countByGender(gender: GenderEnum): number | undefined {
     let sumGenderMale = 0;
     for (let i = 0; i < this.persons.length; i++) {
       if (this.persons[i].gender === GenderEnum.male) {
@@ -260,9 +242,9 @@ export class AppComponent {
     if (gender === GenderEnum.male) {
       return sumGenderMale;
     } else if (gender === GenderEnum.female) {
-      return this.persons.length-sumGenderMale;
+      return this.persons.length - sumGenderMale;
     } else {
-      console.warn('You input an incorrect gender !');
+      console.warn('You person-form-modal an incorrect gender !');
       return;
     }
 
