@@ -9,13 +9,13 @@ import {AppComponent} from "../../app.component";
 })
 export class PersonFormModalComponent {
 
-  public createPersonFormGroup: FormGroup;
+  public personModalFormGroup: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     public dialogClose: MatDialogRef<PersonFormModalComponent>,
   ) {
-    this.createPersonFormGroup = this._buildFormGroup();
+    this.personModalFormGroup = this._buildFormGroup();
   }
 
  public onCancelDialog() {
@@ -24,12 +24,12 @@ export class PersonFormModalComponent {
 
 
   public onAddPerson() {
-    const {name} = this.createPersonFormGroup.value;
+    const {name} = this.personModalFormGroup.value;
     this.dialogClose.close({name});
   }
 
   private _buildFormGroup() {
-    return (this.createPersonFormGroup = this.fb.group({
+    return (this.personModalFormGroup = this.fb.group({
       name: this.fb.control(''),
       // gender: this.fb.control(''),
       // hobbies: this.fb.control(''),
