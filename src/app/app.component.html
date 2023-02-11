@@ -6,6 +6,7 @@
       <th>Checkbox</th>
       <th>isOnline</th>
       <th>Name</th>
+      <th>Hobbies</th>
     </tr>
     <ng-container >
     <tr *ngFor="let person of persons">
@@ -14,10 +15,12 @@
       </td>
       <td>
         <div *ngIf="person.isOnline===true; else isOffline_circle" class="isOnline-circle">
+
         </div>
-        <ng-template #isOffline_circle><div class="isOffline-circle"></div></ng-template>
       </td>
       <td>{{person.name}}</td>
+      <td *ngIf="person.hobbies; else doesnt_exist_property">{{person.hobbies}}</td>
+
     </tr>
     </ng-container>
   </table>
@@ -26,3 +29,7 @@
   </div>
 </div>
 <pre>{{persons | json}}</pre>
+
+<ng-template #isOffline_circle><div class="isOffline-circle"></div></ng-template>
+
+<ng-template #doesnt_exist_property><div class="doesnt-exist-property">Nu are hobby-uri</div></ng-template>

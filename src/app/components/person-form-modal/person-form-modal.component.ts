@@ -23,15 +23,15 @@ export class PersonFormModalComponent {
 
 
   public onAddPerson() {
-    const {name} = this.personModalFormGroup.value;
-    this.dialogClose.close({name});
+    const person = this.personModalFormGroup.value;
+    this.dialogClose.close(person);
   }
 
   private _buildFormGroup() {
     return (this.personModalFormGroup = this.fb.group({
       name: this.fb.control(''),
       // gender: this.fb.control(''),
-      // hobbies: this.fb.control(''),
+      hobby: this.fb.control(''),
     }))
   }
 

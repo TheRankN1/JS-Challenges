@@ -23,7 +23,7 @@ export class AppComponent {
 
   }
 
-  public createPerson(name: string, gender: GenderEnum = GenderEnum.male): void {
+  public createPerson(name: string,  hobbies : [],gender: GenderEnum = GenderEnum.male): void {
 
     this.persons.push({
       id: this.idCounter,
@@ -32,7 +32,7 @@ export class AppComponent {
       likeCounts: 0,
       gender,
       isOnline: AppComponent._getRandomBoolean(),
-      hobbies: [],
+      hobbies,
     })
 
     this.idCounter++;
@@ -44,7 +44,9 @@ export class AppComponent {
      if(!result){
        return;
      }else{
-       this.createPerson(result.name);
+       console.log(result);
+       this.createPerson(result.name , result.hobby);
+       this.addHobby(result.id , result.hobbies);
      }
     });
   }
