@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {AppComponent} from "../../app.component";
 @Component({
   selector: 'app-input',
   templateUrl: './person-form-modal.component.html',

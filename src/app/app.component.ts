@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
-import {Person} from "./person.interface";
+import {PersonInterface} from "./person.interface";
 import {messages} from './messages';
 import {PersonFormModalComponent} from "./components/person-form-modal/person-form-modal.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 
 export class AppComponent {
-  public persons: Person[] = [];
+  public persons:  PersonInterface[] = [];
   public idCounter = 0;
 
   constructor(
@@ -37,7 +38,6 @@ export class AppComponent {
     this.idCounter++;
 
   }
-
  public openCreatePersonModal() {
     const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {});
     dialogRef.afterClosed().subscribe((result) => {
@@ -104,15 +104,15 @@ export class AppComponent {
     }
   }
 
-  public showBoys(): Person[] {
+  public showBoys(): PersonInterface[] {
     return this.persons.filter(person => person.gender === GenderEnum.male);
   }
 
-  public showGirls(): Person[] {
+  public showGirls(): PersonInterface[] {
     return this.persons.filter(person => person.gender === GenderEnum.female);
   }
 
-  public showOnlinePersons(): Person[] {
+  public showOnlinePersons(): PersonInterface[] {
     return this.persons.filter(person => person.isOnline);
   }
 
@@ -255,7 +255,7 @@ export class AppComponent {
   }
 
 
-  private _getPersonById(id: number): Person | undefined {
+  private _getPersonById(id: number): PersonInterface | undefined {
     return this.persons.find(person => person.id === id);
   }
 }

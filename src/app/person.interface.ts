@@ -1,4 +1,4 @@
-export interface Person {
+export interface PersonInterface {
   id: number,
   name: string,
   hobbies: string[],

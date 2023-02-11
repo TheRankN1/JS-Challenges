@@ -7,7 +7,8 @@
       <th>isOnline</th>
       <th>Name</th>
     </tr>
-    <tr>
+    <ng-container >
+    <tr *ngFor="let person of persons">
       <td>
         <input type="checkbox">
       </td>
@@ -15,8 +16,9 @@
         <div class="isOnline-circle">
         </div>
       </td>
-      <td>Person name</td>
+      <td>{{person.name}}</td>
     </tr>
+    </ng-container>
   </table>
   <div class="modal">
     <button (click)="openCreatePersonModal()" mat-flat-button>Adauga persoana</button>
