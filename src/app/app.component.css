@@ -1,39 +1,58 @@
-.isOffline-circle{
+.isOffline-circle {
   width: 15px;
   height: 15px;
   border-radius: 50%;
   border: 1px solid gray;
   background: white;
 }
-.doesnt-exist-property{
-  color:grey;
+
+.doesnt-exist-property {
+  color: grey;
   font-weight: bold;
   font-size: 18px;
 }
-.isOnline-circle{
+
+.isOnline-circle {
   width: 15px;
   height: 15px;
   border-radius: 50%;
   background: green;
 }
-.container{
+
+.edit-icon {
+  display: none;
+}
+
+.hobbies-col:hover .edit-icon {
+  display: block;
+  cursor: pointer;
+}
+
+.hobbies-col:hover .hobbies {
+  display: none;
+}
+
+.container {
   display: flex;
   padding: 15px;
   flex-direction: column;
   justify-content: center;
 }
-.title{
+
+.title {
   padding: 10px;
   text-align: center;
 }
-table{
+
+table {
   font-size: 16px;
 }
-th{
+
+th {
   background: #d4cccc;
   font-weight: 500;
   padding: 10px;
-  margin : 0;
+  margin: 0;
   border-spacing: 0;
 }
 

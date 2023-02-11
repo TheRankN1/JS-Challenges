@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
 import {PersonInterface} from "./person.interface";
 import {messages} from './messages';
 import {PersonFormModalComponent} from "./components/person-form-modal/person-form-modal.component";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Observable} from "rxjs";
+import {HobbiesModalComponent} from "./components/hobbies-modal/hobbies-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,8 @@ export class AppComponent {
   public idCounter = 0;
 
   constructor(
-    public dialogOpen: MatDialog
+    public dialogOpen: MatDialog,
   ) {
-
   }
 
   public createPerson(name: string,  hobbies : [],gender: GenderEnum = GenderEnum.male): void {
@@ -43,10 +43,16 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe((result) => {
      if(!result){
        return;
-     }else{
+     }
        console.log(result);
        this.createPerson(result.name , result.hobby.split(','));
-     }
+
+    });
+  }
+  public onUpdateHobbiesModal(person:PersonInterface) {
+    const dialogRef = this.dialogOpen.open(HobbiesModalComponent, { data:{person}});
+    dialogRef.afterClosed().subscribe((result) => {
+      person.hobbies = result.hobbies.split(',');
     });
   }
 

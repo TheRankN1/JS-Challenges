@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {HobbiesModalComponent} from "../hobbies-modal/hobbies-modal.component";
 @Component({
   selector: 'app-input',
   templateUrl: './person-form-modal.component.html',
@@ -9,6 +10,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class PersonFormModalComponent {
 
   public personModalFormGroup: FormGroup;
+
 
   constructor(
     private fb: FormBuilder,
