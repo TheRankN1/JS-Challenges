@@ -13,8 +13,9 @@
         <input type="checkbox">
       </td>
       <td>
-        <div class="isOnline-circle">
+        <div *ngIf="person.isOnline===true; else isOffline_circle" class="isOnline-circle">
         </div>
+        <ng-template #isOffline_circle><div class="isOffline-circle"></div></ng-template>
       </td>
       <td>{{person.name}}</td>
     </tr>

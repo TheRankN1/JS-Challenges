@@ -1,9 +1,15 @@
-.isOnline-circle{
+.isOffline-circle{
   width: 15px;
   height: 15px;
   border-radius: 50%;
   border: 1px solid gray;
   background: white;
+}
+.isOnline-circle{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: green;
 }
 .container{
   display: flex;
