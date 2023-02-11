@@ -45,8 +45,7 @@ export class AppComponent {
        return;
      }else{
        console.log(result);
-       this.createPerson(result.name , result.hobby);
-       this.addHobby(result.id , result.hobbies);
+       this.createPerson(result.name , result.hobby.split(','));
      }
     });
   }
