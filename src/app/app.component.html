@@ -9,6 +9,7 @@
       <th>Hobbies</th>
       <th>Total-Likes</th>
       <th>Total-Visits</th>
+      <th>Actions</th>
     </tr>
     <ng-container>
       <tr *ngFor="let person of persons">
@@ -27,6 +28,10 @@
         </td>
         <td>{{totalLikes()}}</td>
         <td>{{totalVisits()}}</td>
+        <td style="display:flex; gap:20px; cursor:pointer;">
+          <i style="cursor:pointer" (click)="deletePerson(person.id)" class="fa-sharp fa-solid fa-trash"></i>
+          <i (click)="openEditPersonModal(person)" class="fa-regular fa-pen-to-square"></i>
+        </td>
       </tr>
     </ng-container>
   </table>

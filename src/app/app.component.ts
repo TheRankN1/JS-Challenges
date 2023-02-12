@@ -39,7 +39,9 @@ export class AppComponent {
 
   }
  public openCreatePersonModal() {
-    const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {});
+    const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {
+      data : {onEditMode : false}
+    });
     dialogRef.afterClosed().subscribe((result) => {
      if(!result){
        return;
@@ -47,6 +49,15 @@ export class AppComponent {
        console.log(result);
        this.createPerson(result.name , result.hobby.split(','));
 
+    });
+  }
+  public openEditPersonModal(person:PersonInterface){
+    const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {
+    data : {onEditMode : true , person}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      person.name=result.name
+      person.hobbies = result.hobby
     });
   }
   public onUpdateHobbiesModal(person:PersonInterface) {

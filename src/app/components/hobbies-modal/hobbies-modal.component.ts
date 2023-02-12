@@ -9,7 +9,7 @@ import {PersonFormModalComponent} from "../person-form-modal/person-form-modal.c
   templateUrl: './hobbies-modal.component.html',
   styleUrls: ['./hobbies-modal.component.css']
 })
-export class HobbiesModalComponent implements OnInit {
+export class HobbiesModalComponent {
 
   public hobbiesModalFormGroup : FormGroup
 
@@ -19,8 +19,6 @@ export class HobbiesModalComponent implements OnInit {
     this.hobbiesModalFormGroup = this._buildModalFormGroup()
     this.patchForm()
 
-  }
-  ngOnInit(): void {
   }
   private patchForm() {
     if (!this.data.person) {
