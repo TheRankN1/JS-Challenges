@@ -38,6 +38,9 @@
   <div class="modal">
     <button (click)="openCreatePersonModal()" mat-flat-button>Adauga persoana</button>
   </div>
+  <div class="total-persons">
+    <p>Total persoane : {{persons.length}}</p>
+  </div>
 </div>
 <pre>{{persons | json}}</pre>
 
