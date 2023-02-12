@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Hobbies</th>
       <th>Total-Likes</th>
+      <th>Total-Visits</th>
     </tr>
     <ng-container>
       <tr *ngFor="let person of persons">
@@ -25,6 +26,7 @@
           <i (click)="onUpdateHobbiesModal(person)" class="fa-regular edit-icon fa-pen-to-square"></i>
         </td>
         <td>{{totalLikes()}}</td>
+        <td>{{totalVisits()}}</td>
       </tr>
     </ng-container>
   </table>

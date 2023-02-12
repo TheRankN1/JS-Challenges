@@ -201,6 +201,14 @@ export class AppComponent {
 
     return sumOfLikes;
   }
+  public totalVisits(): number {
+    let sumOfVisits = 0;
+    for (let i = 0; i < this.persons.length; i++) {
+      sumOfVisits += this.persons[i].visitCounts;
+    }
+
+    return sumOfVisits;
+  }
 
   public sortByPropName(propName: any): void {
     this.persons.sort(function (a, b) {
