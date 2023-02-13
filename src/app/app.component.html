@@ -2,6 +2,7 @@
 <div class="container">
 
   <input (click)="onToggleAllPersonCheckedState()" type="checkbox" [indeterminate]="masterIndeterminate" [checked]="masterCheckbox">
+  <p> {{this.showCheckedPersons().length}} : persoane selectate</p>
   <table>
     <tr>
       <th>Checkbox</th>

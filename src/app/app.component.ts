@@ -15,7 +15,7 @@ import {HobbiesModalComponent} from "./components/hobbies-modal/hobbies-modal.co
 
 
 export class AppComponent {
-  public persons:  PersonInterface[] = [];
+  public persons: PersonInterface[] = [];
   public idCounter = 0;
 
   public masterIndeterminate: boolean = false;
@@ -26,7 +26,7 @@ export class AppComponent {
   ) {
   }
 
-  public createPerson(name: string,  hobbies : [],gender: GenderEnum = GenderEnum.male): void {
+  public createPerson(name: string, hobbies: [], gender: GenderEnum = GenderEnum.male): void {
 
     this.persons.push({
       id: this.idCounter,
@@ -41,30 +41,33 @@ export class AppComponent {
     this.idCounter++;
 
   }
- public openCreatePersonModal() {
+
+  public openCreatePersonModal() {
     const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {
-      data : {onEditMode : false}
+      data: {onEditMode: false}
     });
     dialogRef.afterClosed().subscribe((result) => {
-     if(!result){
-       return;
-     }
-       console.log(result);
-       this.createPerson(result.name , result.hobby.split(','));
+      if (!result) {
+        return;
+      }
+      console.log(result);
+      this.createPerson(result.name, result.hobby.split(','));
       this.toggleMasterCheckboxCheckedState();
     });
   }
-  public openEditPersonModal(person:PersonInterface){
+
+  public openEditPersonModal(person: PersonInterface) {
     const dialogRef = this.dialogOpen.open(PersonFormModalComponent, {
-    data : {onEditMode : true , person}
+      data: {onEditMode: true, person}
     });
     dialogRef.afterClosed().subscribe((result) => {
-      person.name=result.name
+      person.name = result.name
       person.hobbies = result.hobby
     });
   }
-  public onUpdateHobbiesModal(person:PersonInterface) {
-    const dialogRef = this.dialogOpen.open(HobbiesModalComponent, { data:{person}});
+
+  public onUpdateHobbiesModal(person: PersonInterface) {
+    const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
     dialogRef.afterClosed().subscribe((result) => {
       person.hobbies = result.hobbies.split(',');
     });
@@ -157,28 +160,30 @@ export class AppComponent {
       return;
     }
     if (checkedPersons === this.persons.length) {
-     this.masterIndeterminate = false;
+      this.masterIndeterminate = false;
       this.masterCheckbox = true;
     } else {
       this.masterIndeterminate = true;
       this.masterCheckbox = true;
     }
   }
-   public onToggleAllPersonCheckedState(){
-     const checkedPersons = this.showCheckedPersons().length;
-     if(checkedPersons===0){
-       this.setAllPersonsChecked();
-     }
-     if(checkedPersons===this.persons.length){
-       this.setAllPersonsUnchecked();
-     }else{
-       this.setAllPersonsChecked();
-     }
-   }
-  public onToggleCheckedState(id : number) : void {
+
+  public onToggleAllPersonCheckedState() {
+    const checkedPersons = this.showCheckedPersons().length;
+    if (checkedPersons === 0) {
+      this.setAllPersonsChecked();
+    }
+    if (checkedPersons === this.persons.length) {
+      this.setAllPersonsUnchecked();
+    } else {
+      this.setAllPersonsChecked();
+    }
+  }
+
+  public onToggleCheckedState(id: number): void {
     const person = this._getPersonById(id);
-    if(person)
-    person.isChecked=!person.isChecked;
+    if (person)
+      person.isChecked = !person.isChecked;
   }
 
   public groupPersonHobbies(arrids: number[], newHobby: string): void {
@@ -235,6 +240,7 @@ export class AppComponent {
 
     return sumOfLikes;
   }
+
   public totalVisits(): number {
     let sumOfVisits = 0;
     for (let i = 0; i < this.persons.length; i++) {
