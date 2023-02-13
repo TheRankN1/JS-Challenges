@@ -51,7 +51,7 @@ export class AppComponent {
      }
        console.log(result);
        this.createPerson(result.name , result.hobby.split(','));
-      this.toggleAllPersonsCheckedState();
+      this.toggleMasterCheckboxCheckedState();
     });
   }
   public openEditPersonModal(person:PersonInterface){
@@ -149,7 +149,7 @@ export class AppComponent {
     }
   }
 
-  public toggleAllPersonsCheckedState() {
+  public toggleMasterCheckboxCheckedState() {
     const checkedPersons = this.showCheckedPersons().length;
     if (checkedPersons === 0) {
       this.masterIndeterminate = false;
@@ -164,7 +164,18 @@ export class AppComponent {
       this.masterCheckbox = true;
     }
   }
-  public onToggleCheckedStatus(id : number) : void {
+   public onToggleAllPersonCheckedState(){
+     const checkedPersons = this.showCheckedPersons().length;
+     if(checkedPersons===0){
+       this.setAllPersonsChecked();
+     }
+     if(checkedPersons===this.persons.length){
+       this.setAllPersonsUnchecked();
+     }else{
+       this.setAllPersonsChecked();
+     }
+   }
+  public onToggleCheckedState(id : number) : void {
     const person = this._getPersonById(id);
     if(person)
     person.isChecked=!person.isChecked;

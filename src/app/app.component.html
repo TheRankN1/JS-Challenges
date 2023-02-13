@@ -1,7 +1,7 @@
 <h1 class="title">Persoane</h1>
 <div class="container">
 
-  <input type="checkbox" [indeterminate]="masterIndeterminate" [checked]="masterCheckbox">
+  <input (click)="onToggleAllPersonCheckedState()" type="checkbox" [indeterminate]="masterIndeterminate" [checked]="masterCheckbox">
   <table>
     <tr>
       <th>Checkbox</th>
@@ -12,10 +12,10 @@
       <th>Actions</th>
     </tr>
     <ng-container>
-      {{this.masterCheckbox}}
+
       <tr *ngFor="let person of persons">
         <td>
-          <input style="cursor:pointer; " (click)="onToggleCheckedStatus(person.id) ; toggleAllPersonsCheckedState()"
+          <input style="cursor:pointer; " (click)="onToggleCheckedState(person.id) ; toggleMasterCheckboxCheckedState()"
                  type="checkbox" [checked]="person.isChecked">
         </td>
         <td>{{person.name}}</td>
