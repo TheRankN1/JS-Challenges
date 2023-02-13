@@ -292,6 +292,10 @@ export class AppComponent {
     })
   }
 
+  public increaseVisitCounts(id:number){
+    this.persons[id].visitCounts++;
+  }
+
   public filterPerson(name: string): void {
     for (let i = 0; i < this.persons.length; i++) {
       if (this.persons[i].name.includes(name)) {

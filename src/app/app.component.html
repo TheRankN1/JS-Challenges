@@ -22,7 +22,7 @@
     </tr>
     <ng-container>
 
-      <tr *ngFor="let person of persons">
+      <tr style="cursor:pointer;" *ngFor="let person of persons" (click)="increaseVisitCounts(person.id)">
         <td>
           <input style="cursor:pointer; " (click)="onToggleCheckedState(person.id) ; toggleMasterCheckboxCheckedState()"
                  type="checkbox" [checked]="person.isChecked">
