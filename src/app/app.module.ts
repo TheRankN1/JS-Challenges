@@ -10,13 +10,15 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HobbiesModalComponent } from './components/hobbies-modal/hobbies-modal.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 ;
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonFormModalComponent,
-    HobbiesModalComponent
+    HobbiesModalComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,

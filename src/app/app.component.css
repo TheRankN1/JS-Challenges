@@ -30,6 +30,17 @@
 
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+.header-icons{
+  display: flex;
+  gap:25px;
+}
+.header-icons i{
+  cursor: pointer;
+}
 .title {
   padding: 10px;
   text-align: center;

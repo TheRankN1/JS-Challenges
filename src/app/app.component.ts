@@ -6,6 +6,7 @@ import {PersonFormModalComponent} from "./components/person-form-modal/person-fo
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Observable} from "rxjs";
 import {HobbiesModalComponent} from "./components/hobbies-modal/hobbies-modal.component";
+import {ConfirmationModalComponent} from "./components/confirmation-modal/confirmation-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -71,6 +72,19 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe((result) => {
       person.hobbies = result.hobbies.split(',');
     });
+  }
+  public onOpenConfirmationModal(title:string , message:string){
+    const dialogRef = this.dialogOpen.open(ConfirmationModalComponent , {data : {
+      title,
+        message
+
+      },
+    width:'600px',
+    height:'300px'
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+
+    })
   }
 
   public deletePerson(id: number): void {
