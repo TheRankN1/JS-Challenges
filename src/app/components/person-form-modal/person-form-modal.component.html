@@ -4,7 +4,7 @@
 <!--  <person-form-modal type="text" placeholder="gender" formControlName="gender">-->
   <div class="buttons">
     <button (click)="onCancelDialog()" mat-raised-button>Anulare</button>
-    <button *ngIf="data.onEditMode==false" (click)="onReturnPersonModalValue()" mat-flat-button>Adauga persoana noua</button>
-    <button *ngIf="data.onEditMode==true" (click)="onReturnPersonModalValue()" mat-flat-button>Editeaza persoana</button>
+    <button *ngIf="data.onEditMode==false" (click)="onClose()" mat-flat-button>Adauga persoana noua</button>
+    <button *ngIf="data.onEditMode==true" (click)="onClose()" mat-flat-button>Editeaza persoana</button>
   </div>
 </form>

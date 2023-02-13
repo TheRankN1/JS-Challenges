@@ -3,7 +3,7 @@ export interface PersonInterface {
   name: string,
   hobbies: string[],
   gender: string,
-  isOnline: boolean,
+  isChecked: boolean,
   visitCounts: number,
   likeCounts: number,
 }

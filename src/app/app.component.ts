@@ -18,6 +18,9 @@ export class AppComponent {
   public persons:  PersonInterface[] = [];
   public idCounter = 0;
 
+  public masterIndeterminate: boolean = false;
+  public masterCheckbox: boolean = false;
+
   constructor(
     public dialogOpen: MatDialog,
   ) {
@@ -31,7 +34,7 @@ export class AppComponent {
       visitCounts: 0,
       likeCounts: 0,
       gender,
-      isOnline: AppComponent._getRandomBoolean(),
+      isChecked: AppComponent._getRandomBoolean(),
       hobbies,
     })
 
@@ -48,7 +51,7 @@ export class AppComponent {
      }
        console.log(result);
        this.createPerson(result.name , result.hobby.split(','));
-
+      this.toggleAllPersonsCheckedState();
     });
   }
   public openEditPersonModal(person:PersonInterface){
@@ -130,32 +133,41 @@ export class AppComponent {
     return this.persons.filter(person => person.gender === GenderEnum.female);
   }
 
-  public showOnlinePersons(): PersonInterface[] {
-    return this.persons.filter(person => person.isOnline);
+  public showCheckedPersons(): PersonInterface[] {
+    return this.persons.filter(person => person.isChecked);
   }
 
-  public setAllPersonsOnline(): void {
+  public setAllPersonsChecked(): void {
     for (let i = 0; i < this.persons.length; i++) {
-      this.persons[i].isOnline = true;
+      this.persons[i].isChecked = true;
     }
   }
 
-  public setAllPersonsOffline(): void {
+  public setAllPersonsUnchecked(): void {
     for (let i = 0; i < this.persons.length; i++) {
-      this.persons[i].isOnline = false;
+      this.persons[i].isChecked = false;
     }
   }
 
-  public toggleAllPersonsOnlineState(): void {
-    const onlinePersons = this.showOnlinePersons().length;
-    if (onlinePersons === 0) {
-      console.warn('All persons are offline !');
+  public toggleAllPersonsCheckedState() {
+    const checkedPersons = this.showCheckedPersons().length;
+    if (checkedPersons === 0) {
+      this.masterIndeterminate = false;
+      this.masterCheckbox = false;
+      return;
     }
-    if (onlinePersons === this.persons.length) {
-      this.setAllPersonsOffline();
+    if (checkedPersons === this.persons.length) {
+     this.masterIndeterminate = false;
+      this.masterCheckbox = true;
     } else {
-      this.setAllPersonsOnline();
+      this.masterIndeterminate = true;
+      this.masterCheckbox = true;
     }
+  }
+  public onToggleCheckedStatus(id : number) : void {
+    const person = this._getPersonById(id);
+    if(person)
+    person.isChecked=!person.isChecked;
   }
 
   public groupPersonHobbies(arrids: number[], newHobby: string): void {

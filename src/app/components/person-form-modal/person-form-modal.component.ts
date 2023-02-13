@@ -26,7 +26,7 @@ export class PersonFormModalComponent {
     this.dialogClose.close();
   }
 
-  public onReturnPersonModalValue() {
+  public onClose() {
     const person = this.personModalFormGroup.value;
     this.dialogClose.close(person);
   }

@@ -1,10 +1,10 @@
 <h1 class="title">Persoane</h1>
 <div class="container">
 
+  <input type="checkbox" [indeterminate]="masterIndeterminate" [checked]="masterCheckbox">
   <table>
     <tr>
       <th>Checkbox</th>
-      <th>isOnline</th>
       <th>Name</th>
       <th>Hobbies</th>
       <th>Total-Likes</th>
@@ -12,14 +12,11 @@
       <th>Actions</th>
     </tr>
     <ng-container>
+      {{this.masterCheckbox}}
       <tr *ngFor="let person of persons">
         <td>
-          <input type="checkbox">
-        </td>
-        <td>
-          <div *ngIf="person.isOnline===true; else isOffline_circle" class="isOnline-circle">
-
-          </div>
+          <input style="cursor:pointer; " (click)="onToggleCheckedStatus(person.id) ; toggleAllPersonsCheckedState()"
+                 type="checkbox" [checked]="person.isChecked">
         </td>
         <td>{{person.name}}</td>
         <td *ngIf="person.hobbies; else doesnt_exist_property" class="hobbies-col">
