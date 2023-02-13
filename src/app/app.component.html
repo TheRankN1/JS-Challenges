@@ -7,9 +7,8 @@
       <p> {{this.showCheckedPersons().length}} : persoane selectate</p>
     </div>
     <div *ngIf="showCheckedPersons().length>0" class="header-icons">
-      <i class="fa-sharp fa-solid fa-trash"></i>
-      <i class="fa-regular fa-pen-to-square" (click)="onOpenConfirmationModal( '', '')">
-         </i>
+      <i class="fa-sharp fa-solid fa-trash" (click)="onOpenConfirmationModal( '', '')"></i>
+      <i class="fa-regular fa-pen-to-square" (click)="onAddTheSameHobbies(showCheckedPersons())"></i>
     </div>
   </div>
   <table>
@@ -30,7 +29,7 @@
         </td>
         <td>{{person.name}}</td>
         <td *ngIf="person.hobbies; else doesnt_exist_property" class="hobbies-col">
-          <div class="hobbies">{{person.hobbies}}</div>
+          <div  class="hobbies">{{person.hobbies}}</div>
           <i (click)="onUpdateHobbiesModal(person)" class="fa-regular edit-icon fa-pen-to-square"></i>
         </td>
         <td>{{totalLikes()}}</td>

@@ -89,6 +89,13 @@ export class AppComponent {
     })
   }
 
+  public onAddTheSameHobbies(person:PersonInterface[]){
+    const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
+    dialogRef.afterClosed().subscribe((result) => {
+     this.groupPersonHobbies(this.showIdsToCheckedPersons() , result.hobbies)
+    });
+  }
+
   public deletePerson(id: number): void {
     const findPerson = this._getPersonById(id);
     if (findPerson) {
@@ -159,6 +166,10 @@ export class AppComponent {
   public showNameToCheckedPersons() {
     let names = this.showCheckedPersons().map(person => person.name).join(',');
     return names;
+  }
+  public showIdsToCheckedPersons() {
+    let ids = this.showCheckedPersons().map(person => person.id)
+    return ids;
   }
 
   public setAllPersonsChecked(): void {

@@ -38,7 +38,6 @@ export class HobbiesModalComponent {
 }
   public sendNewHobbies(){
     const newHobbies = this.hobbiesModalFormGroup.value;
-    console.log(newHobbies)
     this.dialogClose.close(newHobbies);
   }
 
