@@ -11,6 +11,6 @@ export class ConfirmationModalComponent{
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { title : string ; message : string }) {
+    public data: { title : string ; message : any }) {
   }
 }

@@ -1,13 +1,15 @@
 <h1 class="title">Persoane</h1>
 <div class="container">
   <div class="header">
-  <div class="checkbox-person">
-  <input (click)="onToggleAllPersonCheckedState()" type="checkbox" [indeterminate]="masterIndeterminate" [checked]="masterCheckbox">
-  <p> {{this.showCheckedPersons().length}} : persoane selectate</p>
-  </div>
-    <div class="header-icons">
+    <div class="checkbox-person">
+      <input (click)="onToggleAllPersonCheckedState()" type="checkbox" [indeterminate]="masterIndeterminate"
+             [checked]="masterCheckbox">
+      <p> {{this.showCheckedPersons().length}} : persoane selectate</p>
+    </div>
+    <div *ngIf="showCheckedPersons().length>0" class="header-icons">
       <i class="fa-sharp fa-solid fa-trash"></i>
-      <i (click)="onOpenConfirmationModal('mihai' , 'alex')" class="fa-regular fa-pen-to-square"></i>
+      <i class="fa-regular fa-pen-to-square" (click)="onOpenConfirmationModal( '', '')">
+         </i>
     </div>
   </div>
   <table>

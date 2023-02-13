@@ -25,6 +25,7 @@ export class AppComponent {
   constructor(
     public dialogOpen: MatDialog,
   ) {
+
   }
 
   public createPerson(name: string, hobbies: [], gender: GenderEnum = GenderEnum.male): void {
@@ -73,17 +74,18 @@ export class AppComponent {
       person.hobbies = result.hobbies.split(',');
     });
   }
-  public onOpenConfirmationModal(title:string , message:string){
-    const dialogRef = this.dialogOpen.open(ConfirmationModalComponent , {data : {
-      title,
-        message
 
+  public onOpenConfirmationModal(title: string, message: string) {
+    const dialogRef = this.dialogOpen.open(ConfirmationModalComponent, {
+      data: {
+        title: 'Sterge persoanele selectate : ',
+        message: 'Ai selectat persoanele  : ' + this.showNameToCheckedPersons() + ' Esti sigur ca vrei sa le stergi ?'
       },
-    width:'600px',
-    height:'300px'
+      width: '600px',
+      height: '300px'
     });
     dialogRef.afterClosed().subscribe((result) => {
-
+      console.log();
     })
   }
 
@@ -152,6 +154,11 @@ export class AppComponent {
 
   public showCheckedPersons(): PersonInterface[] {
     return this.persons.filter(person => person.isChecked);
+  }
+
+  public showNameToCheckedPersons() {
+    let names = this.showCheckedPersons().map(person => person.name).join(',');
+    return names;
   }
 
   public setAllPersonsChecked(): void {

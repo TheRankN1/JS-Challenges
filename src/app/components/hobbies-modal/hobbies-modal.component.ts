@@ -41,4 +41,5 @@ export class HobbiesModalComponent {
     console.log(newHobbies)
     this.dialogClose.close(newHobbies);
   }
+
 }
