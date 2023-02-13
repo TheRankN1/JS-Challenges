@@ -16,7 +16,7 @@ import {LocalStorageService} from "./local-storage.service";
 })
 
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   public idCounter = 0;
 
@@ -25,14 +25,17 @@ export class AppComponent implements OnInit{
 
   constructor(
     public dialogOpen: MatDialog,
-    public storageService : LocalStorageService
+    public storageService: LocalStorageService
   ) {
-  console.log(this.persons)
+    console.log(this.persons)
   }
- ngOnInit() {
-   this.storageService.loadPerson();
- }
+
+  ngOnInit() {
+    this.storageService.loadPerson();
+  }
+
   public persons: PersonInterface[] = this.storageService.loadPerson();
+
   public createPerson(name: string, hobbies: [], gender: GenderEnum = GenderEnum.male): void {
 
     this.persons.push({
@@ -60,7 +63,6 @@ export class AppComponent implements OnInit{
       this.createPerson(result.name, result.hobby.split(','));
       this.toggleMasterCheckboxCheckedState();
     });
-    this.storageService.setPerson(this.persons);
   }
 
   public openEditPersonModal(person: PersonInterface) {
@@ -68,6 +70,9 @@ export class AppComponent implements OnInit{
       data: {onEditMode: true, person}
     });
     dialogRef.afterClosed().subscribe((result) => {
+      if(!result){
+        return;
+      }
       person.name = result.name
       person.hobbies = result.hobby
       this.storageService.setPerson(this.persons);
@@ -77,6 +82,9 @@ export class AppComponent implements OnInit{
   public onUpdateHobbiesModal(person: PersonInterface) {
     const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
     dialogRef.afterClosed().subscribe((result) => {
+      if(!result){
+        return;
+      }
       person.hobbies = result.hobbies.split(',');
       this.storageService.setPerson(this.persons);
     });
@@ -86,7 +94,7 @@ export class AppComponent implements OnInit{
     const dialogRef = this.dialogOpen.open(ConfirmationModalComponent, {
       data: {
         title: 'Sterge persoanele selectate : ',
-        message: 'Ai selectat persoanele  : ' + this.showNameToCheckedPersons() + ' Esti sigur ca vrei sa le stergi ?'
+        message: 'Ai selectat persoanele  : ' +  this.showNameToCheckedPersons() + ' Esti sigur ca vrei sa le stergi ?'
       },
       width: '600px',
       height: '300px'
@@ -96,10 +104,13 @@ export class AppComponent implements OnInit{
     })
   }
 
-  public onAddTheSameHobbies(person:PersonInterface[]){
+  public onAddTheSameHobbies(person: PersonInterface[]) {
     const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
     dialogRef.afterClosed().subscribe((result) => {
-     this.groupPersonHobbies(this.showIdsToCheckedPersons() , result.hobbies)
+      if(!result){
+        return;
+      }
+      this.groupPersonHobbies(this.showIdsToCheckedPersons(), result.hobbies)
       this.storageService.setPerson(this.persons);
     });
   }
@@ -177,6 +188,7 @@ export class AppComponent implements OnInit{
     let names = this.showCheckedPersons().map(person => person.name).join(',');
     return names;
   }
+
   public showIdsToCheckedPersons() {
     let ids = this.showCheckedPersons().map(person => person.id)
     return ids;
@@ -311,7 +323,7 @@ export class AppComponent implements OnInit{
     this.storageService.setPerson(this.persons);
   }
 
-  public increaseVisitCounts(id:number){
+  public increaseVisitCounts(id: number) {
     this.persons[id].visitCounts++;
     this.storageService.setPerson(this.persons);
   }
