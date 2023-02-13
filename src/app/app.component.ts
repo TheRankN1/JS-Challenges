@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {GenderEnum} from "./gender.enum";
 import {PersonInterface} from "./person.interface";
 import {messages} from './messages';
@@ -7,6 +7,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 import {Observable} from "rxjs";
 import {HobbiesModalComponent} from "./components/hobbies-modal/hobbies-modal.component";
 import {ConfirmationModalComponent} from "./components/confirmation-modal/confirmation-modal.component";
+import {LocalStorageService} from "./local-storage.service";
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,8 @@ import {ConfirmationModalComponent} from "./components/confirmation-modal/confir
 })
 
 
-export class AppComponent {
-  public persons: PersonInterface[] = [];
+export class AppComponent implements OnInit{
+
   public idCounter = 0;
 
   public masterIndeterminate: boolean = false;
@@ -24,10 +25,14 @@ export class AppComponent {
 
   constructor(
     public dialogOpen: MatDialog,
+    public storageService : LocalStorageService
   ) {
-
+  console.log(this.persons)
   }
-
+ ngOnInit() {
+   this.storageService.loadPerson();
+ }
+  public persons: PersonInterface[] = this.storageService.loadPerson();
   public createPerson(name: string, hobbies: [], gender: GenderEnum = GenderEnum.male): void {
 
     this.persons.push({
@@ -40,8 +45,8 @@ export class AppComponent {
       hobbies,
     })
 
+    this.storageService.setPerson(this.persons);
     this.idCounter++;
-
   }
 
   public openCreatePersonModal() {
@@ -52,10 +57,10 @@ export class AppComponent {
       if (!result) {
         return;
       }
-      console.log(result);
       this.createPerson(result.name, result.hobby.split(','));
       this.toggleMasterCheckboxCheckedState();
     });
+    this.storageService.setPerson(this.persons);
   }
 
   public openEditPersonModal(person: PersonInterface) {
@@ -65,6 +70,7 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe((result) => {
       person.name = result.name
       person.hobbies = result.hobby
+      this.storageService.setPerson(this.persons);
     });
   }
 
@@ -72,6 +78,7 @@ export class AppComponent {
     const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
     dialogRef.afterClosed().subscribe((result) => {
       person.hobbies = result.hobbies.split(',');
+      this.storageService.setPerson(this.persons);
     });
   }
 
@@ -93,6 +100,7 @@ export class AppComponent {
     const dialogRef = this.dialogOpen.open(HobbiesModalComponent, {data: {person}});
     dialogRef.afterClosed().subscribe((result) => {
      this.groupPersonHobbies(this.showIdsToCheckedPersons() , result.hobbies)
+      this.storageService.setPerson(this.persons);
     });
   }
 
@@ -104,7 +112,7 @@ export class AppComponent {
     } else {
       console.warn(messages.person_message + id + messages.not_exist);
     }
-
+    this.storageService.setPerson(this.persons);
   }
 
   public addHobby(id: number, newHobby: string): void {
@@ -118,6 +126,7 @@ export class AppComponent {
     } else {
       console.warn(messages.person_message + id + messages.not_exist);
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public deleteHobby(id: number, deletedHobby: string): void {
@@ -130,6 +139,7 @@ export class AppComponent {
         findPerson.hobbies.splice(findHobbyIndex, 1);
       }
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public showOnlyPersonsWithHobby(): void {
@@ -198,6 +208,7 @@ export class AppComponent {
       this.masterIndeterminate = true;
       this.masterCheckbox = true;
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public onToggleAllPersonCheckedState() {
@@ -210,24 +221,28 @@ export class AppComponent {
     } else {
       this.setAllPersonsChecked();
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public onToggleCheckedState(id: number): void {
     const person = this._getPersonById(id);
     if (person)
       person.isChecked = !person.isChecked;
+    this.storageService.setPerson(this.persons);
   }
 
   public groupPersonHobbies(arrids: number[], newHobby: string): void {
     for (let i = 0; i < arrids.length; i++) {
       this.addHobby(arrids[i], newHobby);
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public groupPersonDelete(arrids: number[]): void {
     for (let i = 0; i < arrids.length; i++) {
       this.deletePerson(arrids[i]);
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public personVisited(id: number): void {
@@ -238,13 +253,14 @@ export class AppComponent {
     } else {
       console.warn(messages.person_message + id + messages.not_exist);
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public sortByPopular(): void {
     this.persons.sort(function (a, b) {
       return a.visitCounts - b.visitCounts;
     })
-
+    this.storageService.setPerson(this.persons);
   }
 
   public likePerson(id: number): void {
@@ -253,6 +269,7 @@ export class AppComponent {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts++;
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public dislikePerson(id: number): void {
@@ -262,6 +279,7 @@ export class AppComponent {
       const findIndexPerson = this.persons.indexOf(findPerson);
       this.persons[findIndexPerson].likeCounts--;
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public totalLikes(): number {
@@ -290,10 +308,12 @@ export class AppComponent {
         return 1;
       }
     })
+    this.storageService.setPerson(this.persons);
   }
 
   public increaseVisitCounts(id:number){
     this.persons[id].visitCounts++;
+    this.storageService.setPerson(this.persons);
   }
 
   public filterPerson(name: string): void {
@@ -302,6 +322,7 @@ export class AppComponent {
         console.log(this.persons[i].name)
       }
     }
+    this.storageService.setPerson(this.persons);
   }
 
   public totalBy(propName: string): number | undefined {
@@ -320,6 +341,7 @@ export class AppComponent {
     } else {
       console.warn('You person-form-modal a wrong prop !');
     }
+    this.storageService.setPerson(this.persons);
     return;
   }
 
@@ -336,6 +358,7 @@ export class AppComponent {
       return this.persons.length - sumGenderMale;
     } else {
       console.warn('You person-form-modal an incorrect gender !');
+      this.storageService.setPerson(this.persons);
       return;
     }
 
